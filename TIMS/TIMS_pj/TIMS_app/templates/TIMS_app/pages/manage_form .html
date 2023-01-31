@@ -1,0 +1,41 @@
+{% extends "../parts/base.html" %}
+{% load static %}
+
+{% block header %}
+  {% include '../parts/common_header.html' %}
+  <title>巴コーポレーション会社用語辞典｜登録・変更フォーム</title>
+{% endblock %}
+{% block top %}
+  {% include '../parts/common_top.html' %}
+{% endblock %}
+{% block body %}
+<div id="Form_Area">
+  {% if con_data %}
+    {% for con_data in con_data%}
+      {% include '../parts/Form_body.html' %}
+    {% empty %}
+      {% include '../parts/Form_body.html' %}
+    {% endfor %}
+  {% elif Confirming_data %}
+    {% for con_data in con_data%}
+      {% include '../parts/Form_body.html' %}
+    {% empty %}
+      {% include '../parts/Form_body.html' %}
+    {% endfor %}
+    {% include '../parts/Confirm_body.html' %}
+  {% elif ReConfirming_data %}
+    {% include '../parts/ReConfirm_body.html' %}
+  {% else %}
+    {% include '../parts/Form_body.html' %}
+  {% endif %}
+</div>
+{% endblock %}
+{% block footer %}
+  {% if Confirming_data %}
+  {% else %}
+    {% include '../parts/back_btn.html' %}
+  {% endif %}
+  {% include '../parts/base_scripts.html' %}
+  {% include '../parts/validation_js.html' %}
+  {# include '../parts/selection_js.html' #}
+{% endblock %}

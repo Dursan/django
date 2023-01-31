@@ -1,0 +1,18 @@
+
+{{ Request_data.request_name }}様
+
+申請が承認されましたので、画像ファイルをお送り致します。
+ご査収のほど、宜しくお願い致します。
+
+【申請情報】
+申請者: {{Request_data.request_name}}
+ご所属: {{Request_data.request_dpt }}
+
+
+申請画像（添付ファイル）
+{% for img in image_data %}
+・画像ID：{{img.image_id}} 画像名：{% if img.image_sub_name %}{{img.image_main_name}}　{{img.image_sub_name}}{% else %}{{img.image_main_name}}{% endif %}
+{% endfor %}
+
+宜しくお願い致します。
+

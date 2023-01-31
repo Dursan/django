@@ -1,0 +1,28 @@
+<script>
+  $(window).on('load',function(){
+    $('#result_message').toast('show')
+  });
+</script>
+{% if messages %}
+  {% for message in messages %}
+    {% if forloop.first %}
+    <script>
+      var myToastEl = document.getElementById("myToast");
+      myToastEl.show();
+     </script>
+    <!-- Flexbox container for aligning the toasts -->
+      <div aria-live="assertive" aria-atomic="true" data-bs-autohide="true"  data-bs-delay="5000" class="d-flex justify-content-center align-items-center w-50" style="position: absolute;z-index:5;top:30%;left:25%;margin:0 auto;">
+        <!-- Then put toasts within -->
+        <div id="myToast" class="toast w-100 fade" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header {% if message.tags == 'alert alert-error' %}bg-danger{% elif  message.tags == 'alert alert-success' %}bg-success{% else %}bg-{{ message.tags }}{% endif %} text-white fs-5" style="padding-left: 2vw;">
+            <strong class="me-auto">結果</strong>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body fs-4" style="padding-left: 2vw;">
+            {{ message }}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}

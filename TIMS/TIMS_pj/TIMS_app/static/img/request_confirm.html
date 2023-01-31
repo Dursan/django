@@ -1,0 +1,18 @@
+{% extends "../parts/base.html" %}
+{% load static %}
+
+{% block header %}
+  {% include '../parts/common_header.html' %}
+  <title>巴コーポレーション画像管理システム｜申請用ダウンロード資料確認画面</title>
+{% endblock %}
+{% block top %}
+  {% include '../parts/common_top.html' %}
+{% endblock %}
+{% block body %}
+  {% include '../parts/Request_confirm_body.html' %}
+{% endblock %}
+{% block footer %}
+  {% include '../parts/form_btn.html' %}
+  {% include '../parts/base_scripts.html' %}
+  {% include '../parts/validation_js.html' %}
+{% endblock %}

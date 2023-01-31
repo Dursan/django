@@ -1,0 +1,40 @@
+{% load static %}
+    {% if search_word %}
+    <hr style="width:100%;max-width: 1280px;">
+    <div class="container mt-1 mb-3">
+      <div class="row">
+        <div class="col-lg mr-lg-auto">
+          <p class="fs-4">検索ワード：{{search_word}}</p>
+        </div>
+        <div class="col-lg-2 m1-lg-auto">
+          <a class="btn btn-block btn-danger w-100" href="/tims/request_judge_list.html" role="button">リセット</a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <div class="container my-3">
+      <div class="row d-flex flex-row">
+    {% for Shinsei in object_list %}
+          <div class="col-lg-3 col-md-4 col-sm-6 ">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title fs-5 mb-4"><span class="fw-bold">【申請ID】：</span>{{Shinsei.request_code }}</h3>
+                <p class="text-nowrap ps-2"><span class="fw-bold">【申請者】：</span>{{Shinsei.request_name}}</p>
+                <p class="text-nowrap mb-4 ps-2"><span class="fw-bold">【所属】：</span>{{Shinsei.request_dpt}}</p>
+                <p class="fs-4 text-center"><a class="btn btn-primary w-100" href="/tims/request_judge_detail.html?request_code={{Shinsei.request_code}}" role="button">詳細</a></p>
+              </div>
+            </div>
+          </div>
+    {% empty %}
+        <div class="col-lg">
+          <p class="fs-4 text-center mt-4 mb-0">該当する申請はありませんでした。</p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <p class="fs-4 text-center mt-4 mb-4"><a class="btn btn-info w-100" href="/tims" role="button">戻る</a></p>
+        </div>
+    {% endfor %}
+    </div>
+  </div>
+ 

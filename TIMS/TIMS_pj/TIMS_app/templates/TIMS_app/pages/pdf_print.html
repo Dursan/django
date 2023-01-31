@@ -1,0 +1,80 @@
+{% extends "../parts/base.html" %}
+{% load static %}
+
+{% block header %}
+  {% include '../parts/common_header.html' %}
+  <title>巴コーポレーション画像管理システム｜ダウンロード完了</title>
+{% endblock %}
+{% block top %}
+  {% include '../parts/common_top.html' %}
+{% endblock %}
+{% block body %}
+<div id="Form_Area">
+            <div class="container">
+              <div class="row mt-3 mb-4">
+                <div class="col">
+                  <div class="alert alert-secondary border border-danger" role="alert">
+                    <p class="fs-3 mb-0 text-center">申請用資料ダウンロード完了</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <p class="fs-5">※本ページは5秒後、画像一覧に遷移します。</p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <p class="fs-4"><span class="font-weight-bold">申請コード：</span>{{Confirmed_data.request_code}}</p>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <p class="fs-4"><span class="font-weight-bold">部署名：</span>{{Confirmed_data.request_dpt}}</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="fs-4"><span class="font-weight-bold">申請者氏名：</span>{{Confirmed_data.request_name}}</p>
+                </div>
+              </div>
+              <div class="row mb-3 d-flex">
+                <div class="col-md w-auto me-md-5 text-nowrap">
+                  <p class="fs-4"><span class="font-weight-bold">申請者メールアドレス：</span>{{Confirmed_data.request_mail}}</p>
+                </div>
+              </div>
+              <div class="row mb-3 d-flex">
+                <div class="col-md w-auto">
+                  <p class="fs-4"><span class="font-weight-bold">使用目的・理由：</span></p>
+                  <p>{{Confirmed_data.request_description|linebreaksbr}}</p>
+                </div>
+              </div>
+            </div>
+          <div class="container">
+              <div class="row mb-3 d-inline-flex">
+                <p class="fs-5">申請する写真</p>
+                {% for img in image_data %}
+                <div class="col-3 mb-3">
+                  <div class="card" style="width:100%;">
+                    <div style="width:100%;background-image: url('/static/thumbnail/{{img.image_thumbnail_name }}');background-repeat: no-repeat;background-size:cover;background-position:center center;height: 105px;">&nbsp;</div>
+                    <div class="card-body">
+                      <h5 class="card-title fw-bold fs-6">{{img.image_id }}</h5>
+                      <p class="card-text fs-6">{{img.image_main_name }}</p>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+          </div>
+</div>
+{% endblock %}
+{% block footer %}
+<div class="row">
+  <div class="col">
+    <div style="width:50%;margin:1rem auto;"><a  class="btn btn-danger btn-lg btn-block d-grid" href="/tims" role="button">リストに戻る</a></div>
+  </div>
+{% include '../parts/base_scripts.html' %}
+<script>
+setTimeout(function(){
+  window.location.href = '/tims';
+}, 5*1000);
+</script>
+{% endblock %}

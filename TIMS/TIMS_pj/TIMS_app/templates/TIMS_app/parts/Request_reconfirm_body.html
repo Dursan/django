@@ -1,0 +1,63 @@
+
+{% load static %}
+  <form method="post" action="/tims/request_confirm.html" class=" needs-validation" novalidate>{% csrf_token %}
+    <div class="container mb-3">
+      <div class="row">
+        <div class="col">
+          <div class="alert alert-success" role="alert">
+            <h1 class="fs-4 text-center mb-0 fw-bold">画像利用資料作成（修正）</h1>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <h2 class="mb-3 fs-3">選択した画像一覧<span class="fs-5">(画像を選択し直す場合はリストに戻ってください)</span></h2>
+        {% for img in image_data %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+          <div class="card" style="width:100%;">
+            <div style="width:100%;background-image: url('/static/thumbnail/{{img.image_thumbnail_name }}');background-repeat: no-repeat;background-size:cover;background-position:center center;height: 105px;">&nbsp;</div>
+            <div class="card-body">
+              <h5 class="card-title fw-bold fs-6">{{img.image_id }}</h5>
+              <p class="card-text fs-6">{{img.image_main_name }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="row my-3">
+        <div class="col-md-6 me-md-6">
+            <div class="form-group">
+              <label for="request_dpt" class="fs-5">部署名</label>
+              <input type="text" class="form-control form-control-lg" id="request_dpt" name="request_dpt" value="{{Reconfirming_data.request_dpt}}" required>
+            </div>
+        </div>
+        <div class="col-md-6 me-md-6">
+          <div class="form-group">
+            <label for="request_name" class="fs-5">申請者氏名</label>
+            <input type="text" class="form-control form-control-lg" id="request_name" name="request_name" value="{{Reconfirming_data.request_name}}" required>
+          </div>
+        </div>
+      </div>
+      <div class="row my-3">
+        <div class="col-md me-md-6">
+            <div class="form-group">
+              <label for="request_mail" class="fs-5">申請者メールアドレス：</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" id="request_mail" name="request_mail" class="form-control form-control-lg" value="{{Reconfirming_data.request_mail}}" aria-label="申請者@tomoe-corporation.co.jp" aria-describedby="basic-addon1"required>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row my-3 fs-5">
+        <div class="col-md">
+          <div class="form-group">
+            <label for="request_description">使用目的・理由</label>
+            <textarea class="form-control" id="request_description" name="request_description" rows="6" required>{{Reconfirming_data.request_description|linebreaksbr}}</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+      <input type="hidden" name="request_code" value="{{Reconfirming_data.request_code}}">
+      <input type="hidden" name="request_image" value="{{Reconfirming_data.request_image}}">
+      {% for img in image_data %}<input type="hidden" name="image_id[]" value="{{img.image_id}}">{% endfor %}
+      <input type="hidden" name="request_status" value="0">

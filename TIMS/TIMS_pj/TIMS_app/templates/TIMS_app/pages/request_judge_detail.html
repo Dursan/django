@@ -1,0 +1,198 @@
+{% extends "../parts/base.html" %}
+{% load static %}
+
+{% block header %}
+  {% include '../parts/common_header.html' %}
+  <title>巴コーポレーション画像管理システム｜申請詳細内容</title>
+  {% if user.is_superuser != True %}
+  <script type="text/javascript">
+    document.location.href = "/tims/";
+  </script>
+  {% endif %}
+{% endblock %}
+{% block top %}
+  {% include '../parts/common_top.html' %}
+{% endblock %}
+{% block body %}
+<div id="Form_Area">
+  <div class="container">
+    <div class="row mt-3 mb-4">
+      <div class="col">
+        <div class="alert alert-warning border border-danger" role="alert">
+          <p class="fs-3 mb-0 text-center">申請詳細確認画面</p>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <p class="fs-4"><span class="font-weight-bold">【申請コード】：</span>{{Request_data.request_code}}</p>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <p class="fs-4"><span class="font-weight-bold">【部署名】：</span>{{Request_data.request_dpt}}</p>
+      </div>
+      <div class="col-md-6">
+        <p class="fs-4"><span class="font-weight-bold">【申請者氏名】：</span>{{Request_data.request_name}}</p>
+      </div>
+    </div>
+    <div class="row mb-3 d-flex">
+      <div class="col-md w-auto me-md-5 text-nowrap">
+        <p class="fs-4"><span class="font-weight-bold">【申請者メールアドレス】：</span>{{Request_data.request_mail}}</p>
+      </div>
+    </div>
+    <div class="row mb-3 d-flex">
+      <div class="col-md w-auto">
+        <p class="fs-4"><span class="font-weight-bold">【使用目的・理由】：</span></p>
+        <p class="fs-5 ps-md-3">{{Request_data.request_description|linebreaksbr}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <p class="fs-5">【申請する写真】</p>
+      <div class="row mb-3 d-inline-flex w-100">
+        {% for img in image_data %}
+        <div class="col-lg-4 col-md-6 mb-3">
+          <div class="card">
+            <div style="width:100%;background-image: url('/static/thumbnail/{{img.image_thumbnail_name }}');background-repeat: no-repeat;background-size:cover;background-position:center center;height: 105px;">&nbsp;</div>
+            <div class="card-body">
+              <h5 class="card-title fw-bold fs-6">{{img.image_id}}</h5>
+              <p class="card-text fs-6">{{img.image_main_name }}</p>
+              <p class="card-text fs-6"><a  class="btn btn-info btn-lg btn-block d-grid border-primary" href="/tims/request_judge_download.html?image_id={{img.image_id}}" role="button">ダウンロード</a></p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+  </div>
+</div>
+{% if Confirm_data %}
+<div id="ModalConfirm" class="modal in show" tabindex="-1" role="dialog" aria-labelledby="ModalConfirmLabel" aria-hidden="true" data-bs-backdrop="static"  data-bs-keyboard="false" style="display: block; padding-left: 0px;background-color: rgba(0,0,0,0.5);">
+  <div class="modal-dialog modal-xl  modal-dialog-centered">
+    <div class="modal-content p-md-5" style="border-radius:2rem !important;">
+      <div class="container">
+        <div class="row mt-3 mb-4">
+          <div class="col">
+            <div class="alert alert-warning border border-danger" role="alert">
+              <p class="fs-3 mb-0 text-center">申請最終処理確認画面</p>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <p class="fs-4"><span class="font-weight-bold">【申請コード】：</span>{{Confirm_data.request_code}}</p>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <p class="fs-4"><span class="font-weight-bold">【部署名】：</span>{{Confirm_data.request_dpt}}</p>
+          </div>
+          <div class="col-md-6">
+            <p class="fs-4"><span class="font-weight-bold">【申請者氏名】：</span>{{Confirm_data.request_name}}</p>
+          </div>
+        </div>
+        <div class="row mb-3 d-flex">
+          <div class="col-md w-auto me-md-5 text-nowrap">
+            <p class="fs-4"><span class="font-weight-bold">【申請者メールアドレス】：</span>{{Confirm_data.request_mail}}</p>
+          </div>
+        </div>
+        <div class="row mb-3 d-flex">
+          <div class="col-md w-auto">
+            <p class="fs-4"><span class="font-weight-bold">【使用目的・理由】：</span></p>
+            <p class="fs-5 ps-md-3">{{Confirm_data.request_description|linebreaksbr}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <p class="fs-5">【申請された写真】</p>
+          <div class="row mb-3 d-inline-flex w-100">
+            {% for img in image_data %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+              <div class="card" style="width:100%;">
+                <div style="width:100%;background-image: url('/static/thumbnail/{{img.image_thumbnail_name }}');background-repeat: no-repeat;background-size:cover;background-position:center center;height: 105px;">&nbsp;</div>
+                <div class="card-body">
+                  <div class="h-75">
+                    <h5 class="card-title fw-bold fs-6">{{img.image_id}}</h5>
+                    <p class="card-text fs-6">{{img.image_main_name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+      <div class="container">
+        <div class="row mt-3 mb-4">
+          <div class="col-md">
+            <div class="w-75 my-3 mx-auto"><a  class="btn btn-secondary btn-lg btn-block d-grid border-light" href="/tims/request_judge_detail.html?request_code={{Confirm_data.request_code}}" role="button">戻る</a></div>
+          </div>
+          {% if Confirm_data.confirm_code == "0" %}
+          <div class="col-md">
+            <form method="post" action="/tims/request_end.html">{% csrf_token %}
+              <input type="hidden" name="request_code" value="{{Confirm_data.request_code}}">
+              <input type="hidden" name="request_time" value="{%now 'Y-m-d H:i:s' %}">
+              {% for img in image_data %}<input type="hidden" name="image_id[]" value="{{img.image_id}}">{% endfor %}
+              <input type="hidden" name="treatment_code" value="0">
+              <input type="hidden" name="request_status" value="1">
+            <div class="w-75 my-3 mx-auto"><button class="btn btn-primary btn-lg btn-block d-grid w-100 border-light" type="submit">申請処理終了</button></form></div>
+          </div>
+          {% elif Confirm_data.confirm_code == "1" %}
+          <div class="col-md">
+            <form method="post" action="/tims/request_end.html">{% csrf_token %}
+              <input type="hidden" name="request_code" value="{{Confirm_data.request_code}}">
+              <input type="hidden" name="request_time" value="{%now 'Y-m-d H:i:s' %}">
+              {% for img in image_data %}<input type="hidden" name="image_id[]" value="{{img.image_id}}">{% endfor %}
+              <input type="hidden" name="treatment_code" value="1">
+              <input type="hidden" name="request_status" value="1">
+            <div class="w-75 my-3 mx-auto"><button class="btn btn-primary btn-lg btn-block d-grid w-100 border-light" type="submit">メール送付</button></form></div>
+          </div>
+          {% else %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}
+{% block footer %}
+
+<div class="container">
+  {% if Confirm_data %}
+  &nbsp;
+  {% else %}
+  <div class="row mt-3 mb-4">
+    <div class="col-md">
+      <div class="w-75 my-3 mx-auto"><a  class="btn btn-danger btn-lg btn-block d-grid border-light" href="/tims/request_judge_list.html" role="button">リストに戻る</a></div>
+    </div>
+    <div class="col-md">
+      <form method="post" action="/tims/request_end_confirm.html">{% csrf_token %}
+        <input type="hidden" name="request_code" value="{{Request_data.request_code}}">
+        <input type="hidden" name="request_time" value="{%now 'Y-m-d H:i:s' %}">
+        <input type="hidden" name="request_dpt" value="{{Request_data.request_dpt}}">
+        <input type="hidden" name="request_name" value="{{Request_data.request_name}}">
+        <input type="hidden" name="request_mail" value="{{Request_data.request_mail}}">
+        {% for img in image_data %}<input type="hidden" name="image_id[]" value="{{img.image_id}}">{% endfor %}
+        <input type="hidden" name="request_description" value="{{Request_data.request_description}}">
+        <input type="hidden" name="confirm_code" value="0">
+      <div class="w-75 my-3 mx-auto"><button class="btn btn-secondary btn-lg btn-block d-grid w-100 border-light" type="submit">申請対応完了</button></form></div>
+    </div>
+    <div class="col-md">
+      <form method="post" action="/tims/request_end_confirm.html">{% csrf_token %}
+        <input type="hidden" name="request_code" value="{{Request_data.request_code}}">
+        <input type="hidden" name="request_time" value="{%now 'Y-m-d H:i:s' %}">
+        <input type="hidden" name="request_dpt" value="{{Request_data.request_dpt}}">
+        <input type="hidden" name="request_name" value="{{Request_data.request_name}}">
+        <input type="hidden" name="request_mail" value="{{Request_data.request_mail}}">
+        {% for img in image_data %}<input type="hidden" name="image_id[]" value="{{img.image_id}}">{% endfor %}
+        <input type="hidden" name="request_description" value="{{Request_data.request_description}}">
+        <input type="hidden" name="confirm_code" value="1">
+      <div class="w-75 my-3 mx-auto"><button class="btn btn-primary btn-lg btn-block d-grid w-100 border-light" type="submit"{% if file_size >= 20000000 %} disabled{% endif %}>メール送付</button></form></div>
+    </div>
+  </div>
+{% endif %}
+</div>
+  {% include '../parts/base_scripts.html' %}
+  {% include '../parts/validation_js.html' %}
+{% endblock %}

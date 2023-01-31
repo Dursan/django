@@ -1,0 +1,101 @@
+from reportlab.lib import colors
+from reportlab.lib.pagesizes import A4, mm, portrait
+from reportlab.lib.units import mm
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.pdfbase import cidfonts, pdfmetrics
+from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfgen import canvas
+from reportlab.platypus import (BaseDocTemplate, Frame, FrameBreak,Image,
+                                PageBreak, PageTemplate, Paragraph,
+                                SimpleDocTemplate, Spacer, Table, TableStyle) 
+
+
+class POFtest_PDFView(View):
+  
+  model = Tims_ItemList
+  form_class =  Application_for_Use
+  def post(self, request):
+    content_data = self.request.POST
+    filename = content_data['request_code'] + '.pdf'
+    file_path = "TIMS_app/static/pdf/" + filename
+    context = {'Confirming_data':content_data}
+    response = HttpResponse(status=200, content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; file_path="{}"'.format(file_path)
+    pdfmetrics.registerFont(TTFont('MS P ゴシック', 'c:/Windows/Fonts/msgothic.ttc'))
+    font_name = "MS P ゴシック"
+    size = portrait(A4)
+    PdfCanvas = canvas.Canvas(file_path,pagesize=size,)
+    PdfCanvas.save()
+    
+    doc = BaseDocTemplate(file_path,title= '画像使用申請'+'（申請コード：' + content_data['request_code'] +'）',pagesize=size,)
+    
+    show = 1 #Frameの枠を表示
+    doc_width = 210*mm
+    start_x = 20*mm
+    start_y = 277*mm
+    image_id_s=self.request.POST.getlist('image_id[]')
+    img_num=len(image_id_s)
+    request_description_s=self.request.POST.get('request_description')
+    request_description_count=len(request_description_s)
+    #Frame(x1, y1, width,height, leftPadding=6, bottomPadding=6,rightPadding=6, topPadding=6, id=None, showBoundary=0)
+    frames = [
+            Frame(start_x, start_y, doc_width, 240*mm, showBoundary=0),
+        ]
+
+    page_template = PageTemplate("frames", frames=frames)
+    doc.addPageTemplates(page_template)
+    
+
+    style1 = ParagraphStyle(fontName = font_name,fontSize = 20,spaceAfter = 30*mm,name='document_title')
+    style2 = ParagraphStyle(fontName = font_name,fontSize = 14,spaceAfter = 5*mm,name='paragraph_title')
+    style3 = ParagraphStyle(fontName = font_name,fontSize = 12,spaceAfter = 20*mm,name='paragraph_text')
+    style4 = ParagraphStyle(fontName = font_name,fontSize = 12,name='photo_text')
+    
+    flowables = []
+    
+    para = Paragraph('画像使用申請'+'（申請コード：' + content_data['request_code'] +'）', style1)
+    flowables.append(para)
+    para = Paragraph('申請者', style2)
+    flowables.append(para)
+    para = Paragraph( content_data['request_dpt']  + '：' +content_data['request_name'], style3)
+    flowables.append(para)
+    para = Paragraph('使用目的・理由', style2)
+    flowables.append(para)
+
+
+    para = Paragraph(content_data['request_description'], style3)
+    flowables.append(para)
+
+    #改ページ
+    flowables.append(PageBreak())
+
+    para = Paragraph('申請画像一覧', style2)
+    flowables.append(para)
+    
+    image_id_s=self.request.POST.getlist('image_id[]')
+    image_data00=Tims_ItemList.objects.filter(pk__in=image_id_s)
+    context['image_data'] = image_data00
+    image_data = list(image_data00)
+    for i,img in  enumerate(image_data):
+        image_thumbnail_name=img.image_thumbnail_name
+        image_sub_name=img.image_sub_name
+        image_main_name=img.image_main_name
+        image_path = "TIMS_app/static/thumbnail/"
+        photo_url = image_path + image_thumbnail_name
+        photo=Image(photo_url)
+        photo.drawHeight = 30*mm*photo.drawHeight / photo.drawWidth
+        photo.drawWidth = 30*mm
+        if image_sub_name:
+          name = image_main_name + '　' +  image_sub_name
+        else:
+          name = image_main_name 
+        flowables.append(photo)
+        para = Paragraph(name, style4)
+        flowables.append(para)
+        #if i>2 and divmod(i,3)==0:
+          #改ページ
+         # flowables.append(PageBreak())
+          #continue
+    doc.multiBuild(flowables)
+    return render(request,'TIMS_app/pages/pdftest_confirm.html',context)

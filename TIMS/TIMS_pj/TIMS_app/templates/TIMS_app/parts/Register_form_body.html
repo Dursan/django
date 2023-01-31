@@ -1,0 +1,103 @@
+
+{% load static %}
+<form method="post" action="/tims/register_create.html" class=" needs-validation" novalidate>{% csrf_token %}
+  <div class="container mb-3">
+    <div class="row">
+      <div class="col">
+        <div class="alert alert-success" role="alert">
+          <h1 class="fs-4 text-center mb-0 fw-bold">画像登録申請</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h2 class="mb-3 fs-3">画像アップロード</h2>
+      <div id="upFileWrap">
+          <div id="inputFile" class="col-md-6">
+              <!-- ドラッグ&ドロップエリア -->
+              <p id="dropArea">ここにファイルをドロップしてください<br>または</p>
+              <!-- 通常のinput[type=file] -->
+              <div id="inputFileWrap">
+                  <input type="file" accept="image/jpg, image/jpeg" name="image_file_name" id="uploadFile" required>
+                  <div id="btnInputFile"><span>ファイルを選択する</span></div>
+                  <div id="btnChangeFile"><span>ファイルを変更する</span></div>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-md-6 me-md-6">
+          <div class="form-group">
+            <label for="request_dpt" class="fs-5">部署名<sup>*</sup></label>
+            <input type="text" class="form-control form-control-lg" id="image_main_name" name="image_main_name" placeholder="部署名を記入してください" required>
+          </div>
+      </div>
+      <div class="col-md-6 me-md-6">
+        <div class="form-group">
+          <label for="request_name" class="fs-5">申請者名<sup>*</sup></label>
+          <input type="text" class="form-control form-control-lg" id="image_sub_name" name="image_sub_name" placeholder="ご氏名を記入してください" required>
+        </div>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-md-6 me-md-6">
+          <div class="form-group">
+            <label for="request_dpt" class="fs-5">主画像名（案件名など）<sup>*</sup></label>
+            <input type="text" class="form-control form-control-lg" id="image_main_name" name="image_main_name" placeholder="案件名等の主軸となる画像名を記入してください" required>
+          </div>
+      </div>
+      <div class="col-md-6 me-md-6">
+        <div class="form-group">
+          <label for="request_name" class="fs-5">副画像名（工事箇所、年月日など）</label>
+          <input type="text" class="form-control form-control-lg" id="image_sub_name" name="image_sub_name" placeholder="主画像名の補足となる名前を記入してください">
+        </div>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-md me-md-6">
+          <div class="form-group">
+            <label for="request_mail" class="fs-5">事業<sup>*</sup>：</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1">@</span>
+              <input type="text" id="request_mail" name="request_mail" class="form-control form-control-lg" placeholder="申請者@tomoe-corporation.co.jp" aria-label="申請者@tomoe-corporation.co.jp" aria-describedby="basic-addon1"required>
+            </div>
+          </div>
+      </div>
+      <div class="col-md me-md-6">
+        <div class="form-group">
+          <label for="request_mail" class="fs-5">製品<sup>*</sup>：</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input type="text" id="request_mail" name="request_mail" class="form-control form-control-lg" placeholder="申請者@tomoe-corporation.co.jp" aria-label="申請者@tomoe-corporation.co.jp" aria-describedby="basic-addon1"required>
+          </div>
+        </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-md-6 me-md-6">
+          <div class="form-group">
+            <label for="request_dpt" class="fs-5">建設地<sup>*</sup></label>
+            <input type="text" class="form-control form-control-lg" id="image_main_name" name="image_main_name" placeholder="案件名等の主軸となる画像名を記入してください" required>
+          </div>
+      </div>
+      <div class="col-md-6 me-md-6">
+        <div class="form-group">
+          <label for="request_name" class="fs-5">発注元</label>
+          <input type="text" class="form-control form-control-lg" id="image_sub_name" name="image_sub_name" placeholder="主画像名の補足となる名前を記入してください">
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="row my-3 fs-5">
+      <div class="col-md">
+        <div class="form-group">
+          <label for="request_description">備考</label>
+          <textarea class="form-control" id="request_description" name="request_description" rows="6">項目以外で記載しておくべき事項を記載してください</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% for img in image_data %}
+  <input type="hidden" name="image_id[]" value="{{img.image_id}}">
+  {% endfor %}
+  <input type="hidden" name="request_code" value="{{request_code}}">
+  <input type="hidden" name="request_image" value="{% for img in image_data %}{{img.image_id}},{% endfor %}">   
+  <input type="hidden" name="request_status" value="0">

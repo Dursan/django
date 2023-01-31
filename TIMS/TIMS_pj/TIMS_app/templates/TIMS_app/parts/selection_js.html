@@ -1,0 +1,37 @@
+<script>
+  $(document).ready(function(){
+  
+  // selectbox コード選択左側
+  $("#first").on("change", change_select1);
+  
+  });
+  
+  // selectbox コード選択左側
+  function change_select1(){
+  var value = $("#first option:selected").attr("value");
+  //console.log(value);
+  
+  //  #second option の要素数を取得
+  var count = $("#second option").length;
+  //console.log(count);
+  for (var i=1; i<count; i++) {
+      
+      // #second option要素
+      var opt = $("#second option").eq(i);
+      var cls = opt.attr("class");
+      //console.log(i + ": " + cls);
+      
+      if (value == cls){
+          //console.log(i + ": " + value);
+          opt.show();
+      }else if (value == 0){
+          opt.show();
+      }else{
+          opt.hide();
+      }
+  
+  }
+  // value 指定
+  $("#second").val("0");
+  }
+  </script>

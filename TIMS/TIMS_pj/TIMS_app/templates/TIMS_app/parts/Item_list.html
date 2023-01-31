@@ -1,0 +1,47 @@
+{% load static %}
+    {% if search_word.search_word %}
+    <hr style="width:100%;max-width: 1280px;">
+    <div class="container mt-1 mb-3">
+      <div class="row">
+        <div class="col-lg mr-lg-auto">
+          <p class="fs-4">検索ワード：{{search_word.search_word}}</p>
+        </div>
+        <div class="col-lg-2 m1-lg-auto">
+          <a class="btn btn-block btn-danger w-100" href="/tims" role="button">リセット</a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  <form method="get" action="/tims/request_form.html">
+  {% for Tims in object_list %}
+  {% if forloop.first %} <hr class="my-1">{% endif %}
+    <div class="container my-3">
+      <div class="row d-inline-flex flex-row">
+        <div class="col-lg-3 flex-nowrap  align-items-stretch d-inline-flex">
+          <p class="d-block me-4 fs-1"><input class=" my-auto" type="checkbox" id="{{Tims.image_id}}" name="image_id[]" value="{{Tims.image_id}}" style="transform: scale(2);"></p>
+          <p class="mb-0"><img src="{% static '/thumbnail/' %}{{Tims.image_thumbnail_name}}" style="width:100%;height:auto;"></p>
+        </div>
+        <div class="col-lg-9">
+          <p class="text-nowrap float-md-start"><span class="fw-bold">【ID】：</span>{{Tims.image_id|default:"データなし" }}&emsp;</p>
+          <p class="text-nowrap float-md-start"><span class="fw-bold">【タイトル】：</span>{{Tims.image_main_name|default:"データなし" }}&emsp;</p><p><span class="fw-bold">【サブタイトル】：</span>{{Tims.image_sub_name|default:"データなし"}}</p>
+          <p class="text-nowrap float-md-start"><span class="fw-bold">【事業】：</span>{{Tims.image_jigyo|default:"データなし" }}&emsp;</p><p><span class="fw-bold">【製品】：</span>{{Tims.image_product|default:"データなし" }}</p>
+          <p class="text-nowrap float-md-start"><span class="fw-bold">【建設地】：</span>{{Tims.image_place|default:"データなし" }}&emsp;</p><p class="text-nowrap float-md-start"><span class="fw-bold">【完工年】：</span>{{Tims.image_year|default:"データなし" }}&emsp;</p>
+          <p class="text-nowrap float-md-start"><span class="fw-bold">【発注元】：</span>{{Tims.image_client|default:"データなし" }}&emsp;</p><p><span class="fw-bold">【備考】：</span>{{Tims.image_description|default:"データなし" }}</p>
+        </div>
+      </div>
+    </div>
+    <hr class="my-1">
+    {% empty %}
+    <div class="container h-100">
+      <div class="row">
+        <div class="col-lg">
+          <p class="fs-4 text-center mt-4 mb-0">該当する画像はありませんでした。</p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <p class="fs-4 text-center mt-4 mb-4"><a class="btn btn-info w-100" href="/tims" role="button">戻る</a></p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}

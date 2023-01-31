@@ -1,0 +1,20 @@
+
+{% extends "../parts/base.html" %}
+{% load static %}
+{% block header %}
+  {% include '../parts/common_header.html' %}
+  <title>巴コーポレーション画像管理システム（TIMS）｜リスト</title>
+{% endblock %}
+{% block top %}
+  {% include '../parts/common_top.html' %}
+{% endblock %}
+{% block body %}
+<div class="mx-auto min-vh-100" style="width: 90%;max-width: 1280px;margin-bottom: 50px;">
+  {% include '../parts/Listtop_serch.html' %}
+  {% include '../parts/Item_list.html' %}
+</div>
+{% endblock %}
+{% block footer %}
+{% include '../parts/pagenation.html' %}
+{% include '../parts/request_for_use_btn.html' %}
+{% endblock %}

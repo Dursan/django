@@ -1,0 +1,53 @@
+
+{% load static %}
+<div id="Form_Area">
+  <div class="container">
+    <div class="row mt-3 mb-4">
+      <div class="col">
+        <div class="alert alert-warning border border-danger" role="alert">
+          <p class="fs-3 mb-0 text-center">申請用ダウンロード資料確認画面</p>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <p class="fs-4"><span class="font-weight-bold">【申請コード】：</span>{{Confirming_data.request_code}}</p>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <p class="fs-4"><span class="font-weight-bold">【部署名】：</span>{{Confirming_data.request_dpt}}</p>
+      </div>
+      <div class="col-md-6">
+        <p class="fs-4"><span class="font-weight-bold">【申請者氏名】：</span>{{Confirming_data.request_name}}</p>
+      </div>
+    </div>
+    <div class="row mb-3 d-flex">
+      <div class="col-md w-auto me-md-5 text-nowrap">
+        <p class="fs-4"><span class="font-weight-bold">【申請者メールアドレス】：</span>{{Confirming_data.request_mail}}</p>
+      </div>
+    </div>
+    <div class="row mb-3 d-flex">
+      <div class="col-md w-auto">
+        <p class="fs-4"><span class="font-weight-bold">【使用目的・理由】：</span></p>
+        <p class="fs-5 ps-md-3">{{Confirming_data.request_description|linebreaksbr}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <p class="fs-5">【申請する写真】</p>
+      <div class="row mb-3 d-inline-flex w-100">
+        {% for img in image_data %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+          <div class="card" style="width:100%;">
+            <div style="width:100%;background-image: url('/static/thumbnail/{{img.image_thumbnail_name }}');background-repeat: no-repeat;background-size:cover;background-position:center center;height: 105px;">&nbsp;</div>
+            <div class="card-body">
+              <h5 class="card-title fw-bold fs-6">{{img.image_id }}</h5>
+              <p class="card-text fs-6">{{img.image_main_name }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+  </div>
+</div>

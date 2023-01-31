@@ -1,0 +1,17 @@
+
+{% if request.user.is_authenticated %}
+<div class="row">
+  <div class="col-md">
+    <div style="width:60%;margin:0 auto 0.5rem">  <a  class="btn btn-outline-primary btn-lg btn-block bg-white d-grid" href="admin/" role="button">管理画面へ</a></div>
+  </div>
+  <div class="col-md">
+    <div style="width:60%;margin:0 auto 0.5rem">  <a  class="btn btn-primary btn-lg btn-block d-grid" href="new/form.html" role="button">新規登録申請</a></div>
+  </div>
+</div>
+{% else %}
+<div class="row">
+  <div class="col">
+    <div style="width:60%;margin:0 auto 0.5rem" class=" gap-2">  <a  class="btn btn-primary btn-lg btn-block d-grid" href="new/form.html" role="button">新規登録申請</a></div>
+  </div>
+</div>
+{% endif %}

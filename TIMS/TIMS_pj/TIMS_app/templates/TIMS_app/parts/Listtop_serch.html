@@ -1,0 +1,29 @@
+<form method="get"  {% for Chk_Judge in object_list %}{% if Chk_Judge.request_code %}action="/tims/request_judge_list.html"{% else %}action="/tims/index.html"{% endif %}{% endfor %}>
+  <div class="container mt-1 mb-0">
+    <div class="row justify-md-content-end">
+      <div class="col-md-2 text-md-right pr-md-0 pl-md-0">
+        <p class="fs-5 mb-md-0 mt-2">ワード検索</p>
+      </div>
+      <div class="col-md-7 mb-1">
+        <label for="Search_Word" class="d-none">ワード検索</label>
+        <input type="text" class="form-control" id="Search_Word" name="search_word" placeholder="検索語を１語入力してください">
+      </div>
+      <div class="col-md-3 text-center d-grid">
+        <button type="submit" class="btn btn-outline-secondary mb-2 btn-block bg-info text-dark">絞り込み</button>
+      </div>
+    </div>
+    <div class="row mt-0 mb-4">
+      <div class="col mb-1 pl-lg-5">
+        {% for Chk_Judge in object_list %}
+          {% if Chk_Judge.request_code %}
+            {% if forloop.first %}<p class="pl-lg-5 text-md-center" style="margin-left:1rem;text-indent:-1rem;">※ワード検索です。「申請ID」、「申請者」、「所属」、「メールアドレス」のどれかに検索ワードを含む申請を抽出します。複数ワードはAND条件です、スペースで区切って入力してください。<div class=""></div></p>{% endif %}
+          {% else %}
+            {% if forloop.first %}<p class="pl-lg-5 text-md-center" style="margin-left:1rem;text-indent:-1rem;">※ワード検索です。「タイトル」、「サブタイトル」、「完工年」、「地域」のどれかに検索ワードを含む画像を抽出します。複数ワードはAND条件です、スペースで区切って入力してください。<div class=""></div></p>{% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</form>
+
+

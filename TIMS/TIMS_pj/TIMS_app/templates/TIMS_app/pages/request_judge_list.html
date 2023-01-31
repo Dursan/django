@@ -1,0 +1,23 @@
+{% extends "../parts/base.html" %}
+{% load static %}
+{% block header %}
+  {% include '../parts/common_header.html' %}
+  <title>巴コーポレーション画像管理システム（TIMS）｜使用申請リスト</title>
+  {% if user.is_superuser != True %}
+  <script type="text/javascript">
+    document.location.href = "/tims/";
+  </script>
+  {% endif %}
+{% endblock %}
+{% block top %}
+  {% include '../parts/common_top.html' %}
+{% endblock %}
+{% block body %}
+<div class="mx-auto min-vh-100" style="width: 90%;max-width: 1280px;margin-bottom: 50px;">
+  {% include '../parts/Listtop_serch.html' %}
+  {% include '../parts/Shinsei_list.html' %}
+</div>
+{% endblock %}
+{% block footer %}
+{% include '../parts/pagenation.html' %}
+{% endblock %}
