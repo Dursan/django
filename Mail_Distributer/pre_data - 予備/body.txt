@@ -1,5 +1,0 @@
-﻿[ReplaceTarget:宛名]
-
-
-ファイル名：[ReplaceTarget:ファイル名]
-
